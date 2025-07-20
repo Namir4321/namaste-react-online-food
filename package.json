@@ -1,0 +1,24 @@
+{
+  "name": "namaste-reactjs",
+  "version": "1.0.0",
+  "description": "namaste react practise",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Namir Khan",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.15.4",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.7.0",
+    "shimmer": "^1.2.1",
+    "tailwindcss": "^4.1.11"
+  }
+}
