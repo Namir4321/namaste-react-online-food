@@ -1,9 +1,15 @@
-import React from 'react'
-import { CDN_URL } from '../utils/constants';
+import React from "react";
+import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItems } from "../Redux/cartSlice";
 
-const ItemList = ({items,dummy}) => {
+const ItemList = ({ items, dummy }) => {
+  const dispatch=useDispatch();
+  const handleCart=async(item)=>{
+    const add=dispatch(addItems(item))
+  }
   return (
-    <div className=''>
+    <div className="">
       {items.map((item) => (
         <div
           key={item.card.info.id}
@@ -20,11 +26,14 @@ const ItemList = ({items,dummy}) => {
               </span>
             </div>
             <p className="text-xs">{item.card.info.description}</p>
-            {console.log(item.card.info)}
+            {/* {console.log(item.card.info)} */}
           </div>
           <div className="w-3/12 p-4">
             <div className="absolute">
-              <button className="p-2 mx-16 rounded-lg bg-black text-white shadow-lg">
+              <button
+                className="p-2 mx-16 rounded-lg bg-black text-white shadow-lg"
+                onClick={() => handleCart(item)}
+              >
                 Add +
               </button>
             </div>
@@ -34,6 +43,6 @@ const ItemList = ({items,dummy}) => {
       ))}
     </div>
   );
-}
+};
 
-export default ItemList
+export default ItemList;

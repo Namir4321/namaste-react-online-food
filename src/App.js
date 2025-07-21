@@ -8,6 +8,9 @@ import Contact from "./components/Pages/Contact";
 import ReasturentMenu from "./components/Pages/ReasturentMenu";
 import Error from "./components/Error";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./Redux/Store";
+import Cart from "./components/Pages/Cart";
 // optmizing the app
 // {we can do this by many ways like spliting the code in small chunks
 // using the  reusable component and make the compnnent lighter
@@ -37,13 +40,15 @@ const AppLayout = () => {
       name: "User",
     };
     setUserName(data.name);
-  },[]);
+  }, []);
   return (
     <div className="App">
-      <UserContext.Provider value={{ loggedInUser: userName ,setUserName }}>
-        <Header />
-        <Outlet />
-      </UserContext.Provider>
+      <Provider store={appStore}>
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+          <Header />
+          <Outlet />
+        </UserContext.Provider>
+      </Provider>
     </div>
   );
 };
@@ -85,6 +90,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <ReasturentMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,
