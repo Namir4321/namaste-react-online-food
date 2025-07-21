@@ -2,13 +2,8 @@ import React from "react";
 import { CLD_URL } from "../utils/constants";
 
 const ReasturentCard = (props) => {
-  const {
-    name,
-    cuisines,
-    cloudinaryImageId,
-    avgRating,
-    costForTwo,
-  } = props.resData.info;
+  const { name, cuisines, cloudinaryImageId, avgRating, costForTwo } =
+    props.resData.info;
   // console.log(props.resData.info);
 
   return (
@@ -27,4 +22,23 @@ const ReasturentCard = (props) => {
     </div>
   );
 };
+
+// higher order component is a which when it takes
+// the component as argumnet and return the component with some enchanment not
+// manupilation
+// this is pure component
+export const withPromtedLabel = (ReasturentCard) => {
+  // its returning the component from the component as the pure component does it recives the props inide the component
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black rounded-lg text-white m-2 p-2">
+          Promoted
+        </label>
+        <ReasturentCard {...props} />
+      </div>
+    );
+  };
+};
+
 export default ReasturentCard;

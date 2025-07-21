@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
-import ReasturentCard from "./ReasturentCard";
+import ReasturentCard, { withPromtedLabel } from "./ReasturentCard";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Body = () => {
   const [listofRestaurents, setListOfRestaurent] = useState([]);
   const [filteredReasturent, setFilteredReasturent] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [toprating, setTopRating] = useState(false);
+  const ReasturrentCardPromoted = withPromtedLabel(ReasturentCard);
   const fetchData = async () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999"
@@ -34,7 +36,7 @@ const Body = () => {
       </h1>
     );
   }
-
+const {setUserName,loggedInUser}=useContext(UserContext)
   return listofRestaurents.length === 0 ? (
     <Shimmer />
   ) : (
@@ -63,27 +65,35 @@ const Body = () => {
           >
             Search
           </button>
-          </div>
-          <div className="search m-4 p-4 flex items-center">
-            <button
-              className="px-4 py-2 bg-gray-100 rounded-lg"
-              onClick={() => {
-                const threshold = toprating ? 0 : 4;
-                console.log(
-                  listofRestaurents.filter((res) => res.info.avgRating)
-                );
-
-                const filteredAvg = listofRestaurents.filter(
-                  (res) => res.info.avgRating > threshold
-                );
-                setFilteredReasturent(filteredAvg);
-                setTopRating((prev) => !prev);
-              }}
-            >
-              Top Rated Restaurants
-            </button>
-          </div>
         </div>
+        <div className="search m-4 p-4 flex items-center">
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-lg"
+            onClick={() => {
+              const threshold = toprating ? 0 : 4;
+              console.log(
+                listofRestaurents.filter((res) => res.info.avgRating)
+              );
+
+              const filteredAvg = listofRestaurents.filter(
+                (res) => res.info.avgRating > threshold
+              );
+              setFilteredReasturent(filteredAvg);
+              setTopRating((prev) => !prev);
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
+        <div className="search m-4 p-4 flex items-center">
+          <label>User:</label>
+          <input
+            className="border border-black p-2"
+            vaalue={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+      </div>
       <div className="flex flex-wrap bg-red-200 justify-around">
         {/* {console.log(resList)} */}
         {filteredReasturent.map((reasturent) => (
@@ -92,7 +102,15 @@ const Body = () => {
             key={reasturent.info.id}
             className="link"
           >
-            <ReasturentCard resData={reasturent} />
+            {/* {console.log(filteredReasturent)} */}
+            {/* this is the pure componet where it reciving the component as a argument */}
+            {reasturent.info.promoted ? (
+              <ReasturrentCardPromoted resData={reasturent} />
+            ) : (
+              <ReasturentCard resData={reasturent} />
+            )}
+
+            {/* <ReasturentCard resData={reasturent} /> */}
           </Link>
         ))}
         {/* <ReasturentCard /> */}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UserClass from "./UserClass";
+import UserContext from "../../utils/UserContext";
 class About extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,9 @@ class About extends Component {
     return (
       <div>
         <h1>About class Component</h1>
+        <UserContext.Consumer>
+          {({loggedInUser}) => <h1>{loggedInUser}</h1>}
+        </UserContext.Consumer>
         <h2>This is react class</h2>
         <UserClass name={"First"} location={"Dehradun Class"} />
         {/* when there are moe than one child component the react use it 

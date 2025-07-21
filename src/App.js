@@ -1,16 +1,17 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
 import ReasturentMenu from "./components/Pages/ReasturentMenu";
 import Error from "./components/Error";
+import UserContext from "./utils/UserContext";
 // optmizing the app
 // {we can do this by many ways like spliting the code in small chunks
 // using the  reusable component and make the compnnent lighter
-// and other is we can say it has many name 
+// and other is we can say it has many name
 // Chunking
 // Code Splitting
 // Dynamic Bundling
@@ -22,17 +23,27 @@ const About = lazy(() => import("./components/Pages/About"));
 const Grocery = lazy(() => import("./components/Grocery"));
 // so it loads this compoonet on demand if there is a need
 // it loads the component otherwise not
-// for eg if a file size is too huge and has different 
+// for eg if a file size is too huge and has different
 // microssite for eg in makemytrip it has fligh booking
 // hotel reservation and other
 // so itwill is huge in term of size so it loads component
-//  in same way on demand rather than all in one and it make 
+//  in same way on demand rather than all in one and it make
 // site more faster
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    const data = {
+      name: "User",
+    };
+    setUserName(data.name);
+  },[]);
   return (
     <div className="App">
-      <Header />
-     <Outlet/>
+      <UserContext.Provider value={{ loggedInUser: userName ,setUserName }}>
+        <Header />
+        <Outlet />
+      </UserContext.Provider>
     </div>
   );
 };
