@@ -16,6 +16,7 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999"
     );
     const json = await data.json();
+    // console.log(json);
     setListOfRestaurent(
       json?.data?.cards[4].card.card.gridElements.infoWithStyle.restaurants
     );
@@ -36,7 +37,7 @@ const Body = () => {
       </h1>
     );
   }
-const {setUserName,loggedInUser}=useContext(UserContext)
+  const { setUserName, loggedInUser } = useContext(UserContext);
   return listofRestaurents.length === 0 ? (
     <Shimmer />
   ) : (
@@ -44,6 +45,7 @@ const {setUserName,loggedInUser}=useContext(UserContext)
       <div className="filter flex">
         <div className="Search m-4 p-4">
           <input
+            data-testid="search"
             type="text"
             className="border border-solid border-black"
             value={searchText}
@@ -71,9 +73,9 @@ const {setUserName,loggedInUser}=useContext(UserContext)
             className="px-4 py-2 bg-gray-100 rounded-lg"
             onClick={() => {
               const threshold = toprating ? 0 : 4;
-              console.log(
-                listofRestaurents.filter((res) => res.info.avgRating)
-              );
+              // console.log(
+              //   listofRestaurents.filter((res) => res.info.avgRating)
+              // );
 
               const filteredAvg = listofRestaurents.filter(
                 (res) => res.info.avgRating > threshold

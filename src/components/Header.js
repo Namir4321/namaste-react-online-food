@@ -9,7 +9,7 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
   const { loggedInUser } = useContext(UserContext);
   const cart = useSelector((store) => store.cart.items);
-  console.log(cart);
+  // console.log(cart);
   return (
     <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
       <div className="logo-container">
@@ -38,9 +38,7 @@ const Header = () => {
             <li>Grocery</li>
           </Link>
           <Link to="/cart">
-            <li className="font-semibold">
-              Cart({cart.length > 0 ? cart.length : ""})
-            </li>
+            <li className="font-semibold">Cart({cart.length})</li>
           </Link>
           <button
             className="login px-4"

@@ -9,7 +9,7 @@ const ItemList = ({ items, dummy }) => {
     const add=dispatch(addItems(item))
   }
   return (
-    <div className="">
+    <div className="" data-testid="food-Item">
       {items.map((item) => (
         <div
           key={item.card.info.id}

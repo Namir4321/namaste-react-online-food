@@ -197,4 +197,6 @@ const config = {
   // watchman: true,
 };
 
-module.exports = config;
+module.exports = {
+  testEnvironment: "jest-fixed-jsdom",
+};
